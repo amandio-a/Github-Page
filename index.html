@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Antonio Amandio — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&family=Raleway:wght@800;900&display=swap" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --bg2: #111111;
+      --bg3: #1a1a1a;
+      --accent: #c0a060;
+      --accent2: #8a6f3a;
+      --text: #e8e8e8;
+      --muted: #888;
+      --border: #2a2a2a;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Nunito Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ── NAVBAR ── */
+    #mainNav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.2rem 2rem;
+      transition: background .4s, padding .4s;
+    }
+    #mainNav.scrolled {
+      background: rgba(10,10,10,.96);
+      backdrop-filter: blur(12px);
+      padding: .8rem 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-brand {
+      font-family: 'Raleway', sans-serif;
+      font-weight: 900;
+      font-size: 1.1rem;
+      letter-spacing: .15em;
+      color: var(--accent) !important;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+    .nav-link-custom {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .8rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      transition: color .2s;
+      margin-left: 2rem;
+    }
+    .nav-link-custom:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      background: var(--bg);
+    }
+    .hero-noise {
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      background-size: 200px;
+      pointer-events: none;
+      opacity: .6;
+    }
+    .hero-line {
+      position: absolute;
+      top: 0; bottom: 0;
+      left: 55%;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--accent2) 40%, var(--accent2) 60%, transparent);
+      opacity: .25;
+    }
+    .hero-dots {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: .4;
+      pointer-events: none;
+    }
+
+    .hero-photo-wrap {
+      position: relative;
+      width: 220px;
+      height: 220px;
+      flex-shrink: 0;
+    }
+    .hero-photo-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border: 1px solid var(--accent);
+      opacity: .5;
+      transform: rotate(3deg);
+    }
+    .hero-photo-wrap::after {
+      content: '';
+      position: absolute;
+      inset: -16px;
+      border: 1px solid var(--accent2);
+      opacity: .25;
+      transform: rotate(-2deg);
+    }
+    .hero-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(30%);
+      display: block;
+    }
+    .hero-photo-placeholder {
+      width: 100%;
+      height: 100%;
+      background: var(--bg3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+      color: var(--muted);
+    }
+
+    .hero-name {
+      font-family: 'Raleway', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      line-height: 1;
+      letter-spacing: -.02em;
+      color: #fff;
+    }
+    .hero-name span { color: var(--accent); }
+
+    .hero-role {
+      font-size: .85rem;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 1rem 0 1.6rem;
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+    }
+    .hero-role::before {
+      content: '';
+      display: inline-block;
+      width: 32px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .hero-contact a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      margin-right: 1.5rem;
+      transition: color .2s;
+    }
+    .hero-contact a:hover { color: var(--accent); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .4rem;
+      color: var(--muted);
+      font-size: .7rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      animation: scrollBounce 2s ease-in-out infinite;
+    }
+    @keyframes scrollBounce {
+      0%,100%{transform:translateX(-50%) translateY(0)}
+      50%{transform:translateX(-50%) translateY(6px)}
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 6rem 0; }
+
+    .section-label {
+      font-size: .75rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: .6rem;
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+    }
+    .section-label::before {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+    }
+    .section-title {
+      font-family: 'Raleway', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.1;
+      color: #fff;
+      margin-bottom: 3rem;
+    }
+
+    /* divider */
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0;
+    }
+
+    /* ── SOBRE ── */
+    #sobre { background: var(--bg); }
+    .sobre-text {
+      font-size: 1.1rem;
+      line-height: 1.9;
+      color: #bbb;
+      max-width: 640px;
+    }
+
+    /* ── CURRÍCULO CARD ── */
+    #curriculo { background: var(--bg2); }
+
+    .cv-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .cv-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--accent), var(--accent2));
+    }
+
+    .cv-section-title {
+      color: var(--accent);
+      font-size: .75rem;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      margin-bottom: .8rem;
+      margin-top: 2.2rem;
+      font-weight: 700;
+    }
+    .cv-section-title:first-child { margin-top: 0; }
+
+    .cv-name {
+      font-family: 'Raleway', sans-serif;
+      font-weight: 900;
+      font-size: 2rem;
+      color: #fff;
+      margin-bottom: .4rem;
+    }
+    .cv-contact-info {
+      color: var(--muted);
+      font-size: .85rem;
+      margin-bottom: .2rem;
+    }
+    .cv-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 1.6rem 0;
+    }
+    .cv-body {
+      color: #aaa;
+      font-size: .9rem;
+      line-height: 1.8;
+    }
+    .cv-body ul {
+      padding-left: 0;
+      list-style: none;
+    }
+    .cv-body ul li::before {
+      content: '—';
+      color: var(--accent2);
+      margin-right: .5rem;
+    }
+
+    /* ── HABILIDADES ── */
+    #habilidades { background: var(--bg); }
+
+    .skill-item {
+      margin-bottom: 1.6rem;
+    }
+    .skill-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: .5rem;
+      font-size: .85rem;
+    }
+    .skill-name { color: #ccc; }
+    .skill-level { color: var(--muted); }
+    .skill-bar {
+      height: 2px;
+      background: var(--border);
+      position: relative;
+    }
+    .skill-fill {
+      height: 100%;
+      background: linear-gradient(to right, var(--accent2), var(--accent));
+      transform-origin: left;
+      transform: scaleX(0);
+      transition: transform 1s cubic-bezier(.4,0,.2,1);
+    }
+    .skill-fill.animated { transform: scaleX(1); }
+
+    .tag-list { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1rem; }
+    .tag {
+      border: 1px solid var(--border);
+      padding: .35rem .9rem;
+      font-size: .78rem;
+      letter-spacing: .08em;
+      color: var(--muted);
+      transition: border-color .2s, color .2s;
+    }
+    .tag:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── CONTATO ── */
+    #contato { background: var(--bg2); }
+    .contato-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.4rem 0;
+      border-bottom: 1px solid var(--border);
+      color: #ccc;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: color .2s, padding-left .2s;
+    }
+    .contato-link:hover { color: var(--accent); padding-left: .5rem; }
+    .contato-link i { color: var(--accent); font-size: 1.2rem; width: 24px; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #050505;
+      padding: 2rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: .78rem;
+      letter-spacing: .1em;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── FADE IN ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .hero-photo-wrap { width: 150px; height: 150px; margin-bottom: 2rem; }
+      #hero .d-flex { flex-direction: column; }
+      .cv-card { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="mainNav">
+  <div class="container-fluid d-flex align-items-center justify-content-between">
+    <a href="#hero" class="nav-brand">portfolioHUB</a>
+    <div class="d-none d-md-flex">
+      <a href="#sobre" class="nav-link-custom">Sobre</a>
+      <a href="#curriculo" class="nav-link-custom">Currículo</a>
+      <a href="#habilidades" class="nav-link-custom">Habilidades</a>
+      <a href="#contato" class="nav-link-custom">Contato</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-noise"></div>
+  <div class="hero-dots"></div>
+  <div class="hero-line"></div>
+  <div class="container" style="position:relative;z-index:2">
+    <div class="d-flex align-items-center gap-5 flex-wrap">
+      <div class="hero-photo-wrap">
+        <!-- Coloque sua foto aqui: substitua a div abaixo por <img src="sua-foto.jpg" class="hero-photo" alt="Antonio Amandio"> -->
+        <div class="hero-photo-placeholder"><i class="bi bi-person"></i></div>
+      </div>
+      <div>
+        <div class="hero-role">Engenharia de Software · CEUB</div>
+        <h1 class="hero-name">Antonio<br><span>Amandio</span></h1>
+        <div class="hero-contact mt-4">
+          <a href="mailto:antonioamandio07@gmail.com">
+            <i class="bi bi-envelope"></i> antonioamandio07@gmail.com
+          </a>
+          <a href="tel:+5561985414086">
+            <i class="bi bi-telephone"></i> (61) 98541-4086
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>scroll</span>
+    <i class="bi bi-chevron-down"></i>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 fade-up">
+        <div class="section-label">Quem sou</div>
+        <h2 class="section-title">Sobre<br>mim</h2>
+      </div>
+      <div class="col-lg-7 offset-lg-1 fade-up" style="transition-delay:.15s">
+        <p class="sobre-text">
+          Me chamo Antonio Amandio, tenho 20 anos, nascido e criado no DF, atualmente curso engenharia de software no CEUB, mas já passei por outras instituições. Sou um jovem com muita vontade de aprender mais e de acumular mais conhecimento.
+        </p>
+        <p class="sobre-text mt-4">
+          Busco uma oportunidade na área de Tecnologia da Informação para aplicar e desenvolver meus conhecimentos em programação, contribuindo de forma proativa com a equipe e crescendo profissionalmente.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CURRÍCULO -->
+<section id="curriculo">
+  <div class="container">
+    <div class="row mb-5 fade-up">
+      <div class="col">
+        <div class="section-label">Experiência & Formação</div>
+        <h2 class="section-title">Currículo</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-8 offset-lg-2 fade-up" style="transition-delay:.1s">
+        <div class="cv-card">
+          <div class="cv-name">Antonio Amandio</div>
+          <p class="cv-contact-info"><i class="bi bi-envelope me-2"></i>antonioamandio07@gmail.com</p>
+          <p class="cv-contact-info"><i class="bi bi-telephone me-2"></i>(61) 98541-4086</p>
+
+          <hr class="cv-divider">
+
+          <div class="cv-section-title">Objetivo</div>
+          <div class="cv-body">
+            <p>Busco uma oportunidade na área de Tecnologia da Informação para aplicar e desenvolver meus conhecimentos em programação, contribuindo de forma proativa com a equipe e crescendo profissionalmente.</p>
+          </div>
+
+          <div class="cv-section-title">Formação Acadêmica</div>
+          <div class="cv-body">
+            <p>Ensino Médio Completo — Colégio Objetivo<br>
+            Engenharia de Software (em andamento) — CEUB</p>
+          </div>
+
+          <div class="cv-section-title">Experiência Internacional</div>
+          <div class="cv-body">
+            <p>Intercâmbio em Dublin, Irlanda (1 ano e meio)</p>
+            <ul>
+              <li>Desenvolvimento de fluência em inglês</li>
+              <li>Adaptação a ambientes multiculturais</li>
+              <li>Desenvolvimento de autonomia e responsabilidade</li>
+            </ul>
+          </div>
+
+          <div class="cv-section-title">Idiomas</div>
+          <div class="cv-body">
+            <p>Português — Nativo<br>
+            Inglês — Fluente</p>
+          </div>
+
+          <div class="cv-section-title">Competências</div>
+          <div class="cv-body">
+            <ul>
+              <li>Trabalho em equipe</li>
+              <li>Atuação sob pressão</li>
+              <li>Criatividade</li>
+              <li>Facilidade de adaptação</li>
+              <li>Proatividade</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- HABILIDADES -->
+<section id="habilidades">
+  <div class="container">
+    <div class="row mb-5 fade-up">
+      <div class="col">
+        <div class="section-label">Tecnologias</div>
+        <h2 class="section-title">Habilidades<br>Técnicas</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-5 fade-up" style="transition-delay:.1s">
+        <div class="skill-item">
+          <div class="skill-header">
+            <span class="skill-name">HTML</span>
+            <span class="skill-level">Básico</span>
+          </div>
+          <div class="skill-bar"><div class="skill-fill" style="--w:.45"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header">
+            <span class="skill-name">CSS</span>
+            <span class="skill-level">Básico</span>
+          </div>
+          <div class="skill-bar"><div class="skill-fill" style="--w:.40"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header">
+            <span class="skill-name">JavaScript</span>
+            <span class="skill-level">Básico</span>
+          </div>
+          <div class="skill-bar"><div class="skill-fill" style="--w:.35"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header">
+            <span class="skill-name">Linguagem C</span>
+            <span class="skill-level">Básico</span>
+          </div>
+          <div class="skill-bar"><div class="skill-fill" style="--w:.35"></div></div>
+        </div>
+      </div>
+      <div class="col-lg-5 offset-lg-2 fade-up" style="transition-delay:.2s">
+        <p class="section-label mb-3">Competências</p>
+        <div class="tag-list">
+          <span class="tag">Trabalho em equipe</span>
+          <span class="tag">Pressão</span>
+          <span class="tag">Criatividade</span>
+          <span class="tag">Adaptação</span>
+          <span class="tag">Proatividade</span>
+          <span class="tag">Inglês fluente</span>
+          <span class="tag">Multiculturalismo</span>
+          <span class="tag">Autonomia</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CONTATO -->
+<section id="contato">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 fade-up">
+        <div class="section-label">Fale comigo</div>
+        <h2 class="section-title">Contato</h2>
+      </div>
+      <div class="col-lg-6 offset-lg-1 fade-up" style="transition-delay:.15s">
+        <a href="mailto:antonioamandio07@gmail.com" class="contato-link">
+          <i class="bi bi-envelope-fill"></i>
+          <span>antonioamandio07@gmail.com</span>
+        </a>
+        <a href="tel:+5561985414086" class="contato-link">
+          <i class="bi bi-telephone-fill"></i>
+          <span>(61) 98541-4086</span>
+        </a>
+        <a href="https://github.com/amandio-a" target="_blank" class="contato-link">
+          <i class="bi bi-github"></i>
+          <span>github.com/amandio-a</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2025 Antonio Amandio &nbsp;·&nbsp; portfolioHUB</span>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Navbar scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // Fade up on scroll
+  const fadeEls = document.querySelectorAll('.fade-up');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  fadeEls.forEach(el => obs.observe(el));
+
+  // Skill bars animate
+  const barObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.skill-fill').forEach(bar => {
+          bar.style.transform = `scaleX(${getComputedStyle(bar).getPropertyValue('--w') || bar.style.getPropertyValue('--w')})`;
+          bar.classList.add('animated');
+        });
+        barObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('#habilidades .col-lg-5').forEach(el => barObs.observe(el));
+</script>
+</body>
+</html>
